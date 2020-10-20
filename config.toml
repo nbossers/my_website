@@ -92,28 +92,29 @@ disqusShortname = ""
     # Display your showcases here.
     
     [[params.tiles.showcase]]
-      title = "My CV"
-      subtitle = "Work experiences, extra curricular activities and mmore."
+      title = "About me"
+      subtitle = "Get to know my story"
       image = "pic01.jpg"
       url = "blogs/aliquam"
 
     [[params.tiles.showcase]]
-      title = "Tempus"
-      subtitle = "Feugiat Amet Tempus"
+      title = "CV"
+      subtitle = "Work experiences, extra curricular activities and more"
       image = "pic02.jpg"
       url = "blogs/tempus"
 
     [[params.tiles.showcase]]
-      title = "Magna"
-      subtitle = "Lorem Etiam Nullam"
-      image = "pic03.jpg"
-      url = "blogs/magna"
+      title = "Spielberg vs Burton"
+      subtitle = "An analysis of IMDB movie ratings"
+      image = "pic04.jpg"
+      url = "projects/imdb"
+      
 
     [[params.tiles.showcase]]
-      title = "Ipsum"
-      subtitle = "Nisl Sed Aliquam"
-      image = "pic04.jpg"
-      url = "blogs/ipsum"
+      title = "US, Germany and India"
+      subtitle = "An analysis of GDP and its components"
+      image = "pic03.jpg"
+      url = "blogs/magna"
 
     #[[params.tiles.showcase]]
       #title = "Consequat"
