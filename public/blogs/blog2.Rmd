@@ -1,0 +1,13 @@
+---
+categories:
+- ""
+- ""
+date: "20/10/2020"
+description: Work experiences, extra curicular activities and more
+draft: false
+#image: pic12.jpg
+keywords: ""
+slug: blog2
+title: CV
+---
+![My international work and study experiences, charity work and hobbies](cv.jpg)

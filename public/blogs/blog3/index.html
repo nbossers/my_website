@@ -54,10 +54,6 @@
             
                 <li><a href="/blogs">Blogs</a></li>
             
-                <li><a href="/blogs/ipsum">Generic Blog</a></li>
-            
-                <li><a href="/elements.html">Elements</a></li>
-            
 
         </ul>
         <ul class="actions vertical">
@@ -80,19 +76,18 @@
                                 <h1>Spielburg vs Burton</h1>
                             </header>
                             
-                                <span class="image main"><img src="/img/blogs/pic08.jpg" alt="" /></span>
+                                <span class="image main"><img src="/img/blogs/pic12.jpg" alt="" /></span>
                             
                             
 
 
-<p>IMDB ratings: Differences between directors</p>
 <p>I would like you to explore whether the mean IMDB rating for Steven Spielberg and Tim Burton are the same or not. I will run a hypothesis test and calculate the confidence intervals for the mean ratings of these two directors.</p>
-<p>Null and alternative hypothesis:</p>
-<p>H0: The difference in the mean IMDB ratings for Steven Spielberg and Tim Burton is equal to zero
-H1: The difference in the mean IMDB ratings for Steven Spielberg and Tim Burton is not equal to zero</p>
-<p>Loading data and examining its structure:</p>
+<p><strong>Null and alternative hypothesis:</strong><br />
+H0: The difference in the mean IMDB ratings for Steven Spielberg and Tim Burton is equal to zero.<br />
+H1: The difference in the mean IMDB ratings for Steven Spielberg and Tim Burton is not equal to zero.</p>
+<p><strong>Loading data and examining its structure:</strong></p>
 <pre class="r"><code>movies &lt;- read_csv(here::here(&quot;data&quot;, &quot;movies.csv&quot;))</code></pre>
-<p>R analysis:</p>
+<p><strong>R analysis:</strong></p>
 <pre class="r"><code>#round values up to 3 decimals
 options(digits=4)
 
@@ -149,8 +144,8 @@ ggplot()+
           colour=&quot;white&quot;,
           size=0.5,
           alpha=0.2)</code></pre>
-<p><img src="/blogs/blog3_files/figure-html/unnamed-chunk-1-1.png" width="648" style="display: block; margin: auto;" />
-The difference in mean IMDB rating is 0.64.</p>
+<p><img src="/blogs/blog3_files/figure-html/unnamed-chunk-1-1.png" width="648" style="display: block; margin: auto;" /></p>
+<p>The difference in mean IMDB rating is 0.64.</p>
 <p>Examining the graph, we cannot draw any final conclusion, as the overlap in the confidence intervals is minor - this will require some further investigation.</p>
 <pre class="r"><code>#Calculating the difference in means
 diff_means &lt;- movies_clean %&gt;% 
@@ -176,7 +171,7 @@ spielberg_burton_null %&gt;%
   theme_minimal() +
   theme(panel.grid.minor = element_blank())</code></pre>
 <p><img src="/blogs/blog3_files/figure-html/unnamed-chunk-2-1.png" width="648" style="display: block; margin: auto;" /></p>
-<p>The red line is pretty far in the right tail of the distribution and seems atypical. We can calculate the probability of seeing a difference as big as 0.64 by using the get_pvalue function</p>
+<p>The red line is pretty far in the right tail of the distribution and seems atypical. We can calculate the probability of seeing a difference as big as 0.64 by getting the p-value.</p>
 <pre class="r"><code>#Calculating the p value
 spielberg_burton_null %&gt;% 
  get_pvalue(obs_stat = diff_means,
@@ -184,8 +179,8 @@ spielberg_burton_null %&gt;%
 <pre><code>## # A tibble: 1 x 1
 ##   p_value
 ##     &lt;dbl&gt;
-## 1  0.0084</code></pre>
-<p>The p value of 0.0104 which indicates that there is a probability of 1.04% to observe a difference in means of the ratings as large as 0.64.
+## 1  0.0128</code></pre>
+<p>The p value of less than 0.05 indicates that there is a probability of less than 5% to observe a difference in means of the ratings as large as 0.64.
 Therefore, we can conclude that there is a statistically significant difference between the IMDB ratings of the two directors, with higher ratings for Steven Spielberg than Tim Burton. We can now reject the Null hypothesis.</p>
 
                         </div>

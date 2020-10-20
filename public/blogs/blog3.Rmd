@@ -5,7 +5,7 @@ categories:
 date: "20/10/2020"
 description: An analysis of IMDB movie ratings
 draft: false
-image: pic08.jpg
+image: pic12.jpg
 keywords: ""
 slug: blog3
 title: Spielburg vs Burton
@@ -44,25 +44,19 @@ library(tidyquant)
 library(forcats)
 ```
 
-
-IMDB ratings: Differences between directors
-
 I would like you to explore whether the mean IMDB rating for Steven Spielberg and Tim Burton are the same or not. I will run a hypothesis test and calculate the confidence intervals for the mean ratings of these two directors. 
 
 
-Null and alternative hypothesis:
+**Null and alternative hypothesis:**  
+H0: The difference in the mean IMDB ratings for Steven Spielberg and Tim Burton is equal to zero.  
+H1: The difference in the mean IMDB ratings for Steven Spielberg and Tim Burton is not equal to zero.
 
-H0: The difference in the mean IMDB ratings for Steven Spielberg and Tim Burton is equal to zero
-H1: The difference in the mean IMDB ratings for Steven Spielberg and Tim Burton is not equal to zero
-
-Loading data and examining its structure:
-
+**Loading data and examining its structure:**
 ```{r load-movies-data}
 movies <- read_csv(here::here("data", "movies.csv"))
 ```
 
-R analysis:
-
+**R analysis:**
 ```{r}
 #round values up to 3 decimals
 options(digits=4)
@@ -121,6 +115,7 @@ ggplot()+
           size=0.5,
           alpha=0.2)
 ```
+
 The difference in mean IMDB rating is 0.64.
 
 Examining the graph, we cannot draw any final conclusion, as the overlap in the confidence intervals is minor - this will require some further investigation.
@@ -151,7 +146,7 @@ spielberg_burton_null %>%
   theme(panel.grid.minor = element_blank())
 ```
 
-The red line is pretty far in the right tail of the distribution and seems atypical. We can calculate the probability of seeing a difference as big as 0.64 by using the get_pvalue function
+The red line is pretty far in the right tail of the distribution and seems atypical. We can calculate the probability of seeing a difference as big as 0.64 by getting the p-value.
 
 ```{r}
 
@@ -162,5 +157,5 @@ spielberg_burton_null %>%
 
 ```
 
-The p value of 0.0104 which indicates that there is a probability of 1.04% to observe a difference in means of the ratings as large as 0.64. 
+The p value of less than 0.05 indicates that there is a probability of less than 5% to observe a difference in means of the ratings as large as 0.64. 
 Therefore, we can conclude that there is a statistically significant difference between the IMDB ratings of the two directors, with higher ratings for Steven Spielberg than Tim Burton. We can now reject the Null hypothesis.

@@ -53,6 +53,14 @@
   </url>
   
   <url>
+    <loc>/blogs/blog2/</loc>
+  </url>
+  
+  <url>
+    <loc>/blogs/gdp/</loc>
+  </url>
+  
+  <url>
     <loc>/projects/gdp/</loc>
   </url>
   
@@ -66,6 +74,10 @@
   
   <url>
     <loc>/blogs/blog3/</loc>
+  </url>
+  
+  <url>
+    <loc>/blogs/blog4/</loc>
   </url>
   
 </urlset>
