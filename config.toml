@@ -185,10 +185,10 @@ disqusShortname = ""
     city = "London NW1 4SA"
     country = "United Kingdom"
 
-  # Footer section
-  #[params.footer]
-    #enable = true
-    #copyright = "Company Name"
+  #Footer section
+  [params.footer]
+    enable = true
+    copyright = "London Business School"
 
     # Uses font awesome icons
     #[[params.footer.social]]
