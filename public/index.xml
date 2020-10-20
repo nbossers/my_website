@@ -43,10 +43,10 @@ H0: The difference in the mean IMDB ratings for Steven Spielberg and Tim Burton 
     
     <item>
       <title>Spielburg vs Burton</title>
-      <link>/blogs/blog5/</link>
+      <link>/blogs/blog3/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>/blogs/blog5/</guid>
+      <guid>/blogs/blog3/</guid>
       <description>IMDB ratings: Differences between directors
 I would like you to explore whether the mean IMDB rating for Steven Spielberg and Tim Burton are the same or not. I will run a hypothesis test and calculate the confidence intervals for the mean ratings of these two directors.
 Null and alternative hypothesis:

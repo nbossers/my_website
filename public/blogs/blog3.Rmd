@@ -7,7 +7,7 @@ description: An analysis of IMDB movie ratings
 draft: false
 image: pic08.jpg
 keywords: ""
-slug: blog5
+slug: blog3
 title: Spielburg vs Burton
 ---
 
@@ -87,7 +87,7 @@ ci_director <- mean_ratings %>%
          
 #reorder the directors to appear Spielberg on top in the chart
          director=fct_reorder(director,desc(stdev_ratings)))
-ci_director
+
 
 #defining colors for error bars
 ci_colors <- c("#09bec3", "#f7746b")
@@ -162,5 +162,5 @@ spielberg_burton_null %>%
 
 ```
 
-The p value of 0.0124 which indicates that there is a probability of 1.24% to observe a difference in means of the ratings as large as 0.64. 
+The p value of 0.0104 which indicates that there is a probability of 1.04% to observe a difference in means of the ratings as large as 0.64. 
 Therefore, we can conclude that there is a statistically significant difference between the IMDB ratings of the two directors, with higher ratings for Steven Spielberg than Tim Burton. We can now reject the Null hypothesis.
