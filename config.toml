@@ -100,7 +100,7 @@ disqusShortname = ""
     [[params.tiles.showcase]]
       title = "Omega group"
       subtitle = "Are women being discriminated with regards to pay?"
-      image = "pic14.png"
+      image = "pic04.jpg"
       url = "blogs/blog1"
 
     [[params.tiles.showcase]]
