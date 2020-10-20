@@ -51,15 +51,13 @@ At the last board meeting of Omega Group Plc., the headquarters of a large multi
 
 The objective is to find out whether there is indeed a significant difference between the salaries of men and women, and whether the difference is due to discrimination or whether it is based on another, possibly valid, determining factor. 
 
-Exploring the data:
+**Exploring the data:**
 ```{r load_omega_data}
 omega <- read_csv(here::here("data", "omega.csv"))
 glimpse(omega) # examine the data frame
-skim(omega)
-summarize(omega)
 ```
 
-Is there a relationship between Salary and Gender?
+**Is there a relationship between Salary and Gender?**
 
 
 ```{r, confint_single_valiables}
@@ -119,12 +117,10 @@ labs(x="Salary difference between males and females", y="no. of employees", titl
   
   difference_salary %>% get_p_value(obs_stat = difference_salary, direction = "two_sided")
 
-glimpse(difference_salary)
-
 ```
 Our null hypothesis is that the average salary of men minus the average salary of women is zero. However, zero does not lie in our 95% confidence interval and hence our null hypothesis fails, stating with 95% confidence that average salary of men is greater than average salary of women.  
 
-Can this be explained by the relationship between experience and gender?
+**Can this be explained by the relationship between experience and gender?**
 
 First, we look at the main statistics for experience and gender:
 ```{r, experience_stats}
@@ -178,19 +174,13 @@ shade_p_value(obs_stat = difference_experience, direction = "two-sided")+
 labs(x="Salary difference based on experience", title="Hypothesis test for difference in salaries based on experience")
   
   difference_experience %>% get_p_value(obs_stat = difference_experience, direction = "two_sided")
-
-  glimpse(difference_experience)
-
-
-
-
 ```
 
 Our null hyphotesis that average experience of men minus the average experience of women is zero. But zero does not lie in our 95% confidence interval and hence our hypothesis fail, stating with 95% confidence that average experience of men is statistically greater than average experience of women.
 
 
 
-Lets see if there is a relationship between experience and salary:
+**Let's see if there is a relationship between experience and salary:**
 ```{r, salary_exp_scatter}
 
 ggplot(omega,aes(x=experience,y=salary)) + 
@@ -205,11 +195,12 @@ ggplot(omega,aes(x=experience,y=salary)) +
   
   
 ```
+
 The curve shows that salary of employee increases with increase in experience.
 
 
 
-Creating correlation matrix between the data:
+**Creating correlation matrix between the data:**
 ```{r, ggpairs}
 omega %>% 
   select(gender, experience, salary) %>% #order variables they will appear in ggpairs()
@@ -219,5 +210,5 @@ omega %>%
 
 ```
 
-Conclusion:
+**Conclusion:**  
 Based on the salary vs experience scatterplot and other analysis, we can state that there are a lot of women with zero or very little work experience compared to men who generally have higher work experience. Moreover, men with more work experience have higher salaries. Further we can also see that there is no direct relationship between salary of employee based on gender, as in cases where male and female employees have same work experience, any one of them could have had higher salary.

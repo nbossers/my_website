@@ -186,9 +186,9 @@ disqusShortname = ""
     country = "United Kingdom"
 
   # Footer section
-  [params.footer]
-    enable = true
-    copyright = "Company Name"
+  #[params.footer]
+    #enable = true
+    #copyright = "Company Name"
 
     # Uses font awesome icons
     #[[params.footer.social]]
