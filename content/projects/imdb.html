@@ -1,25 +1,20 @@
 ---
-categories:
-- ""
-- ""
-date: "20/10/2020"
-description: An analysis of IMDB movie ratings
-draft: false
-image: pic12.jpg
-keywords: ""
-slug: blog3
-title: Spielburg vs Burton
+title: "index"
+author: "Nicolas Bossers"
+date: "10/20/2020"
+output: html_document
 ---
 
 
 
+<p>IMDB ratings: Differences between directors</p>
 <p>I would like you to explore whether the mean IMDB rating for Steven Spielberg and Tim Burton are the same or not. I will run a hypothesis test and calculate the confidence intervals for the mean ratings of these two directors.</p>
-<p><strong>Null and alternative hypothesis:</strong><br />
-H0: The difference in the mean IMDB ratings for Steven Spielberg and Tim Burton is equal to zero.<br />
-H1: The difference in the mean IMDB ratings for Steven Spielberg and Tim Burton is not equal to zero.</p>
-<p><strong>Loading data and examining its structure:</strong></p>
+<p>Null and alternative hypothesis:</p>
+<p>H0: The difference in the mean IMDB ratings for Steven Spielberg and Tim Burton is equal to zero
+H1: The difference in the mean IMDB ratings for Steven Spielberg and Tim Burton is not equal to zero</p>
+<p>Loading data and examining its structure:</p>
 <pre class="r"><code>movies &lt;- read_csv(here::here(&quot;data&quot;, &quot;movies.csv&quot;))</code></pre>
-<p><strong>R analysis:</strong></p>
+<p>R analysis:</p>
 <pre class="r"><code>#round values up to 3 decimals
 options(digits=4)
 
@@ -43,9 +38,14 @@ ci_director &lt;- mean_ratings %&gt;%
          
 #reorder the directors to appear Spielberg on top in the chart
          director=fct_reorder(director,desc(stdev_ratings)))
-
-
-#defining colors for error bars
+ci_director</code></pre>
+<pre><code>## # A tibble: 2 x 7
+##   director mean_ratings count_director stdev_ratings se_director lower_ci
+##   &lt;fct&gt;           &lt;dbl&gt;          &lt;int&gt;         &lt;dbl&gt;       &lt;dbl&gt;    &lt;dbl&gt;
+## 1 Steven ~         7.57             23         0.695       0.145     7.29
+## 2 Tim Bur~         6.93             16         0.749       0.187     6.56
+## # ... with 1 more variable: upper_ci &lt;dbl&gt;</code></pre>
+<pre class="r"><code>#defining colors for error bars
 ci_colors &lt;- c(&quot;#09bec3&quot;, &quot;#f7746b&quot;)
   
 #Visualizing the data
@@ -76,8 +76,8 @@ ggplot()+
           colour=&quot;white&quot;,
           size=0.5,
           alpha=0.2)</code></pre>
-<p><img src="/blogs/blog3_files/figure-html/unnamed-chunk-1-1.png" width="648" style="display: block; margin: auto;" /></p>
-<p>The difference in mean IMDB rating is 0.64.</p>
+<p><img src="/projects/imdb_files/figure-html/unnamed-chunk-1-1.png" width="648" style="display: block; margin: auto;" />
+The difference in mean IMDB rating is 0.64.</p>
 <p>Examining the graph, we cannot draw any final conclusion, as the overlap in the confidence intervals is minor - this will require some further investigation.</p>
 <pre class="r"><code>#Calculating the difference in means
 diff_means &lt;- movies_clean %&gt;% 
@@ -102,8 +102,8 @@ spielberg_burton_null %&gt;%
        subtitle = &quot;Red line shows observed difference in mean&quot;) +
   theme_minimal() +
   theme(panel.grid.minor = element_blank())</code></pre>
-<p><img src="/blogs/blog3_files/figure-html/unnamed-chunk-2-1.png" width="648" style="display: block; margin: auto;" /></p>
-<p>The red line is pretty far in the right tail of the distribution and seems atypical. We can calculate the probability of seeing a difference as big as 0.64 by getting the p-value.</p>
+<p><img src="/projects/imdb_files/figure-html/unnamed-chunk-2-1.png" width="648" style="display: block; margin: auto;" /></p>
+<p>The red line is pretty far in the right tail of the distribution and seems atypical. We can calculate the probability of seeing a difference as big as 0.64 by using the get_pvalue function</p>
 <pre class="r"><code>#Calculating the p value
 spielberg_burton_null %&gt;% 
  get_pvalue(obs_stat = diff_means,
@@ -111,6 +111,6 @@ spielberg_burton_null %&gt;%
 <pre><code>## # A tibble: 1 x 1
 ##   p_value
 ##     &lt;dbl&gt;
-## 1  0.0108</code></pre>
-<p>The p value of less than 0.05 indicates that there is a probability of less than 5% to observe a difference in means of the ratings as large as 0.64.
+## 1  0.0104</code></pre>
+<p>The p value of 0.0124 which indicates that there is a probability of 1.24% to observe a difference in means of the ratings as large as 0.64.
 Therefore, we can conclude that there is a statistically significant difference between the IMDB ratings of the two directors, with higher ratings for Steven Spielberg than Tim Burton. We can now reject the Null hypothesis.</p>

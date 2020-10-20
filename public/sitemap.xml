@@ -3,11 +3,6 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   
   <url>
-    <loc>/</loc>
-    <lastmod>2017-10-31T22:27:21-05:00</lastmod>
-  </url>
-  
-  <url>
     <loc>/categories/</loc>
     <lastmod>2015-07-23T21:13:14-05:00</lastmod>
   </url>
@@ -19,6 +14,11 @@
   
   <url>
     <loc>/tags/plot/</loc>
+    <lastmod>2015-07-23T21:13:14-05:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/</loc>
     <lastmod>2015-07-23T21:13:14-05:00</lastmod>
   </url>
   
@@ -48,15 +48,7 @@
   </url>
   
   <url>
-    <loc>/blogs/</loc>
-  </url>
-  
-  <url>
     <loc>/blogs/blog2/</loc>
-  </url>
-  
-  <url>
-    <loc>/blogs/gdp/</loc>
   </url>
   
   <url>
@@ -65,6 +57,10 @@
   
   <url>
     <loc>/projects/imdb/</loc>
+  </url>
+  
+  <url>
+    <loc>/blogs/</loc>
   </url>
   
   <url>

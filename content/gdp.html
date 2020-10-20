@@ -1,10 +1,3 @@
----
-title: "index"
-author: "Nicolas Bossers"
-date: "10/20/2020"
-output: html_document
----
-
 
 
 <p>GDP components over time and among countries:</p>
@@ -75,7 +68,7 @@ ggplot(comparison_countries,aes(x=years,
        col=&quot;Components of GDP&quot;,
        y=&quot;Billion US$&quot;,
        x=&quot;&quot;)</code></pre>
-<p><img src="/blogs/gdp_files/figure-html/unnamed-chunk-1-1.png" width="888" style="display: block; margin: auto;" /></p>
+<p><img src="gdp_files/figure-html/unnamed-chunk-1-1.png" width="888" style="display: block; margin: auto;" /></p>
 <p>Creating plot to see GDP component breakdown as percentage of GDP in respective year:</p>
 <pre class="r"><code>options(digits=3)
 options(scipen=999)
@@ -138,7 +131,7 @@ ggplot(ratio_components,aes(x=years,
        y=&quot;Proportion&quot;,
        x=&quot;&quot;,
        caption = &quot;Source: United Nations, https://unstats.un.org/unsd/snaama/Downloads&quot;)</code></pre>
-<p><img src="/blogs/gdp_files/figure-html/unnamed-chunk-2-1.png" width="1200" style="display: block; margin: auto;" /></p>
+<p><img src="gdp_files/figure-html/unnamed-chunk-2-1.png" width="1200" style="display: block; margin: auto;" /></p>
 <pre class="r"><code>#Analyzing difference between GDP in dataframe (GDP) and newly calculated GDP (GDP_new)
 GDP_difference &lt;- ratio_components %&gt;% 
   select(1:3) %&gt;% 
