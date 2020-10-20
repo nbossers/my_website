@@ -92,16 +92,16 @@ disqusShortname = ""
     # Display your showcases here.
     
     [[params.tiles.showcase]]
-      title = "About me"
-      subtitle = "Get to know my story"
-      image = "pic07.jpg"
-      url = "blogs/blog1"
-
-    [[params.tiles.showcase]]
       title = "CV"
       subtitle = "Work experiences, extra curricular activities and more"
-      image = "pic06.jpg"
+      image = "pic07.jpg"
       url = "blogs/blog2"
+
+    [[params.tiles.showcase]]
+      title = "Omega group"
+      subtitle = "Are women being discriminated with regards to pay?"
+      image = "pic14.png"
+      url = "blogs/blog1"
 
     [[params.tiles.showcase]]
       title = "Spielberg vs Burton"

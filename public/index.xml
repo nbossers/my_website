@@ -24,8 +24,7 @@ summary(cars)## speed dist ## Min. : 4.0 Min. : 2.00 ## 1st Qu.:12.0 1st Qu.: 2
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
       <guid>/blogs/blog2/</guid>
-      <description>My international work and study experiences, charity work and hobbies
-</description>
+      <description>My international work and study experiences, charity work and hobbies:</description>
     </item>
     
     <item>
@@ -60,6 +59,16 @@ The GDP data we will look at is from the United Nations’ National Accounts Mai
 I would like you to explore whether the mean IMDB rating for Steven Spielberg and Tim Burton are the same or not. I will run a hypothesis test and calculate the confidence intervals for the mean ratings of these two directors.
 Null and alternative hypothesis:
 H0: The difference in the mean IMDB ratings for Steven Spielberg and Tim Burton is equal to zeroH1: The difference in the mean IMDB ratings for Steven Spielberg and Tim Burton is not equal to zero</description>
+    </item>
+    
+    <item>
+      <title>Pay discrimination</title>
+      <link>/blogs/blog1/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>/blogs/blog1/</guid>
+      <description>Omega Group plc- Is there pay discrimination in the company?
+At the last board meeting of Omega Group Plc., the headquarters of a large multinational company, the issue was raised that women were being discriminated in the company, in the sense that the salaries were not the same for male and female executives. A quick analysis of a sample of 50 employees (of which 24 men and 26 women) revealed that the average salary for men was about 8,700 higher than for women.</description>
     </item>
     
     <item>

@@ -1,0 +1,306 @@
+---
+categories:
+- ""
+- ""
+date: "20/10/2020"
+description: Does gender discrimination in pay exists?
+draft: false
+#image: pic15.jpg
+keywords: ""
+slug: blog1
+title: Pay discrimination
+---
+
+
+
+<p><strong>Omega Group plc- Is there pay discrimination in the company?</strong></p>
+<p>At the last board meeting of Omega Group Plc., the headquarters of a large multinational company, the issue was raised that women were being discriminated in the company, in the sense that the salaries were not the same for male and female executives. A quick analysis of a sample of 50 employees (of which 24 men and 26 women) revealed that the average salary for men was about 8,700 higher than for women. This seemed like a considerable difference, so it was decided that a further analysis of the company salaries was warranted.</p>
+<p>The objective is to find out whether there is indeed a significant difference between the salaries of men and women, and whether the difference is due to discrimination or whether it is based on another, possibly valid, determining factor.</p>
+<p>Exploring the data:</p>
+<pre class="r"><code>omega &lt;- read_csv(here::here(&quot;data&quot;, &quot;omega.csv&quot;))
+glimpse(omega) # examine the data frame</code></pre>
+<pre><code>## Rows: 50
+## Columns: 3
+## $ salary     &lt;dbl&gt; 81894, 69517, 68589, 74881, 65598, 76840, 78800, 70033, ...
+## $ gender     &lt;chr&gt; &quot;male&quot;, &quot;male&quot;, &quot;male&quot;, &quot;male&quot;, &quot;male&quot;, &quot;male&quot;, &quot;male&quot;, ...
+## $ experience &lt;dbl&gt; 16, 25, 15, 33, 16, 19, 32, 34, 1, 44, 7, 14, 33, 19, 24...</code></pre>
+<pre class="r"><code>skim(omega)</code></pre>
+<table>
+<caption>(#tab:load_omega_data)Data summary</caption>
+<tbody>
+<tr class="odd">
+<td align="left">Name</td>
+<td align="left">omega</td>
+</tr>
+<tr class="even">
+<td align="left">Number of rows</td>
+<td align="left">50</td>
+</tr>
+<tr class="odd">
+<td align="left">Number of columns</td>
+<td align="left">3</td>
+</tr>
+<tr class="even">
+<td align="left">_______________________</td>
+<td align="left"></td>
+</tr>
+<tr class="odd">
+<td align="left">Column type frequency:</td>
+<td align="left"></td>
+</tr>
+<tr class="even">
+<td align="left">character</td>
+<td align="left">1</td>
+</tr>
+<tr class="odd">
+<td align="left">numeric</td>
+<td align="left">2</td>
+</tr>
+<tr class="even">
+<td align="left">________________________</td>
+<td align="left"></td>
+</tr>
+<tr class="odd">
+<td align="left">Group variables</td>
+<td align="left">None</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Variable type: character</strong></p>
+<table>
+<thead>
+<tr class="header">
+<th align="left">skim_variable</th>
+<th align="right">n_missing</th>
+<th align="right">complete_rate</th>
+<th align="right">min</th>
+<th align="right">max</th>
+<th align="right">empty</th>
+<th align="right">n_unique</th>
+<th align="right">whitespace</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">gender</td>
+<td align="right">0</td>
+<td align="right">1</td>
+<td align="right">4</td>
+<td align="right">6</td>
+<td align="right">0</td>
+<td align="right">2</td>
+<td align="right">0</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Variable type: numeric</strong></p>
+<table>
+<thead>
+<tr class="header">
+<th align="left">skim_variable</th>
+<th align="right">n_missing</th>
+<th align="right">complete_rate</th>
+<th align="right">mean</th>
+<th align="right">sd</th>
+<th align="right">p0</th>
+<th align="right">p25</th>
+<th align="right">p50</th>
+<th align="right">p75</th>
+<th align="right">p100</th>
+<th align="left">hist</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">salary</td>
+<td align="right">0</td>
+<td align="right">1</td>
+<td align="right">68717</td>
+<td align="right">8638.2</td>
+<td align="right">47033</td>
+<td align="right">63303.16</td>
+<td align="right">68847</td>
+<td align="right">74777.7</td>
+<td align="right">84576</td>
+<td align="left">▁▃▇▆▅</td>
+</tr>
+<tr class="even">
+<td align="left">experience</td>
+<td align="right">0</td>
+<td align="right">1</td>
+<td align="right">14</td>
+<td align="right">11.9</td>
+<td align="right">0</td>
+<td align="right">2.25</td>
+<td align="right">15</td>
+<td align="right">20.8</td>
+<td align="right">44</td>
+<td align="left">▇▃▅▂▁</td>
+</tr>
+</tbody>
+</table>
+<pre class="r"><code>summarize(omega)</code></pre>
+<pre><code>## # A tibble: 1 x 0</code></pre>
+<p>Is there a relationship between Salary and Gender?</p>
+<pre class="r"><code># Summary Statistics of salary by gender
+mosaic::favstats (salary ~ gender, data=omega)</code></pre>
+<pre><code>##   gender   min    Q1 median    Q3   max  mean   sd  n missing
+## 1 female 47033 60338  64618 70033 78800 64543 7567 26       0
+## 2   male 54768 68331  74675 78568 84576 73239 7463 24       0</code></pre>
+<pre class="r"><code># Dataframe with two rows (male-female) and having as columns gender, mean, SD, sample size, 
+# the t-critical value, the standard error, the margin of error, 
+# and the low/high endpoints of a 95% condifence interval
+
+male &lt;- omega %&gt;% 
+filter(gender == &quot;male&quot;) %&gt;% 
+summarise(average_salary_male = mean(salary, na.rm=TRUE),
+          SD_salary_male = sd(salary, na.rm=TRUE),
+          count_male =n(),
+          SE_male= SD_salary_male/sqrt(count_male),
+          T_critical=qt(0.975,count_male-1),
+          lower95_male=average_salary_male - T_critical*SE_male,
+          upper95_male=average_salary_male + T_critical*SE_male
+          ) 
+
+female &lt;- omega %&gt;% 
+filter(gender == &quot;female&quot;) %&gt;% 
+summarise(average_salary_female = mean(salary, na.rm=TRUE),
+          SD_salary_female = sd(salary, na.rm=TRUE),
+          count_female =n(),
+          SE_female= SD_salary_female/sqrt(count_female),
+          T_critical=qt(0.975,count_female-1),
+          lower95_female=average_salary_female - T_critical*SE_female,
+          upper95_female=average_salary_female + T_critical*SE_female
+          ) </code></pre>
+<p>Without running the hypothesis test we can cannot say that average salary of males is significantly greater than average salary of females.</p>
+<p><strong>Null and alternative hypothesis:</strong><br />
+H0: The difference in the mean salary for men and women is equal to zero.<br />
+H1: The difference in the mean salary for men and women is not equal to zero.</p>
+<pre class="r"><code># hypothesis testing using t.test() 
+t.test(salary ~ gender, data = omega)</code></pre>
+<pre><code>## 
+##  Welch Two Sample t-test
+## 
+## data:  salary by gender
+## t = -4, df = 48, p-value = 2e-04
+## alternative hypothesis: true difference in means is not equal to 0
+## 95 percent confidence interval:
+##  -12973  -4420
+## sample estimates:
+## mean in group female   mean in group male 
+##                64543                73239</code></pre>
+<pre class="r"><code># hypothesis testing using infer package
+
+set.seed(1234)
+
+difference_salary &lt;- omega %&gt;% 
+  specify(salary~gender) %&gt;% 
+  hypothesise(null = &quot;independence&quot;) %&gt;% 
+  generate(reps=1000, type =&quot;permute&quot;) %&gt;% 
+  calculate(stat = &quot;diff in means&quot;, order = c(&quot;male&quot;, &quot;female&quot;))
+difference_salary %&gt;% visualize()+
+  
+  shade_p_value(obs_stat = difference_salary, direction = &quot;two-sided&quot;)+
+
+labs(x=&quot;Salary difference between males and females&quot;, y=&quot;no. of employees&quot;, title=&quot;Hypothesis test for difference in salaries based on gender&quot;)</code></pre>
+<p><img src="/blogs/blog1_files/figure-html/hypothesis_testing-1.png" width="648" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>  difference_salary %&gt;% get_p_value(obs_stat = difference_salary, direction = &quot;two_sided&quot;)</code></pre>
+<pre><code>## # A tibble: 1 x 1
+##   p_value
+##     &lt;dbl&gt;
+## 1   0.964</code></pre>
+<pre class="r"><code>glimpse(difference_salary)</code></pre>
+<pre><code>## Rows: 1,000
+## Columns: 2
+## $ replicate &lt;int&gt; 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17...
+## $ stat      &lt;dbl&gt; -3031.1, -2543.5, -4998.1, 1084.6, 3497.9, 316.0, 5134.3,...</code></pre>
+<p>Our null hypothesis is that the average salary of men minus the average salary of women is zero. However, zero does not lie in our 95% confidence interval and hence our null hypothesis fails, stating with 95% confidence that average salary of men is greater than average salary of women.</p>
+<p>Can this be explained by the relationship between experience and gender?</p>
+<p>First, we look at the main statistics for experience and gender:</p>
+<pre class="r"><code># Summary Statistics of salary by gender
+favstats (experience ~ gender, data=omega)</code></pre>
+<pre><code>##   gender min    Q1 median   Q3 max  mean    sd  n missing
+## 1 female   0  0.25    3.0 14.0  29  7.38  8.51 26       0
+## 2   male   1 15.75   19.5 31.2  44 21.12 10.92 24       0</code></pre>
+<pre class="r"><code>male_1 &lt;- omega %&gt;% 
+filter(gender == &quot;male&quot;) %&gt;% 
+summarise(average_experience_male = mean(experience, na.rm=TRUE),
+          SD_experience_male = sd(experience, na.rm=TRUE),
+          count_male =n(),
+          SE_male= SD_experience_male/sqrt(count_male),
+          T_critical=qt(0.975,count_male-1),
+          lower95_male=average_experience_male - T_critical*SE_male,
+          upper95_male=average_experience_male + T_critical*SE_male
+          ) 
+
+female_1 &lt;- omega %&gt;% 
+filter(gender == &quot;female&quot;) %&gt;% 
+summarise(average_experience_female = mean(experience, na.rm=TRUE),
+          SD_experience_female = sd(experience, na.rm=TRUE),
+          count_female =n(),
+          SE_female= SD_experience_female/sqrt(count_female),
+          T_critical=qt(0.975,count_female-1),
+          lower95_female=average_experience_female - T_critical*SE_female,
+          upper95_female=average_experience_female + T_critical*SE_female
+          ) </code></pre>
+<p>Based on this evidence, without running a hypothesis test, we cannot conclude that there is a significant difference between the experience of the male and female executives.</p>
+<p><strong>Null and alternative hypothesis:</strong><br />
+H0: The difference in the mean experience for men and women is equal to zero.<br />
+H1: The difference in the mean experience for men and women is not equal to zero.</p>
+<pre class="r"><code>t.test(experience ~ gender, data = omega)</code></pre>
+<pre><code>## 
+##  Welch Two Sample t-test
+## 
+## data:  experience by gender
+## t = -5, df = 43, p-value = 1e-05
+## alternative hypothesis: true difference in means is not equal to 0
+## 95 percent confidence interval:
+##  -19.35  -8.13
+## sample estimates:
+## mean in group female   mean in group male 
+##                 7.38                21.12</code></pre>
+<pre class="r"><code># hypothesis testing using infer package
+
+set.seed(1234)
+difference_experience &lt;- omega %&gt;% 
+  specify(experience~gender) %&gt;% 
+  hypothesise(null = &quot;independence&quot;) %&gt;% 
+  generate(reps=1000, type =&quot;permute&quot;) %&gt;% 
+  calculate(stat = &quot;diff in means&quot;, order = c(&quot;male&quot;, &quot;female&quot;))
+difference_experience %&gt;% visualize() +
+
+shade_p_value(obs_stat = difference_experience, direction = &quot;two-sided&quot;)+
+
+labs(x=&quot;Salary difference based on experience&quot;, title=&quot;Hypothesis test for difference in salaries based on experience&quot;)</code></pre>
+<p><img src="/blogs/blog1_files/figure-html/salary_exp_hyphothesis-1.png" width="648" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>  difference_experience %&gt;% get_p_value(obs_stat = difference_experience, direction = &quot;two_sided&quot;)</code></pre>
+<pre><code>## # A tibble: 1 x 1
+##   p_value
+##     &lt;dbl&gt;
+## 1   0.756</code></pre>
+<pre class="r"><code>  glimpse(difference_experience)</code></pre>
+<pre><code>## Rows: 1,000
+## Columns: 2
+## $ replicate &lt;int&gt; 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17...
+## $ stat      &lt;dbl&gt; -1.2436, -1.8846, -6.8526, 5.5673, 2.7628, -2.5256, 8.051...</code></pre>
+<p>Our null hyphotesis that average experience of men minus the average experience of women is zero. But zero does not lie in our 95% confidence interval and hence our hypothesis fail, stating with 95% confidence that average experience of men is statistically greater than average experience of women.</p>
+<p>Lets see if there is a relationship between experience and salary:</p>
+<pre class="r"><code>ggplot(omega,aes(x=experience,y=salary)) + 
+  geom_smooth() + 
+  geom_point()+
+  theme_classic()+ 
+  labs (
+    title = &quot;Relationship in Experience and Salary&quot;,
+    y     = &quot;Salary&quot;,
+    x     = &quot;Experience in years&quot;  
+  )          </code></pre>
+<p><img src="/blogs/blog1_files/figure-html/salary_exp_scatter-1.png" width="648" style="display: block; margin: auto;" />
+The curve shows that salary of employee increases with increase in experience.</p>
+<p>Creating correlation matrix between the data:</p>
+<pre class="r"><code>omega %&gt;% 
+  select(gender, experience, salary) %&gt;% #order variables they will appear in ggpairs()
+  ggpairs(aes(colour=gender, alpha = 0.3))+
+  theme_bw()</code></pre>
+<p><img src="/blogs/blog1_files/figure-html/ggpairs-1.png" width="648" style="display: block; margin: auto;" /></p>
+<p>Conclusion:
+Based on the salary vs experience scatterplot and other analysis, we can state that there are a lot of women with zero or very little work experience compared to men who generally have higher work experience. Moreover, men with more work experience have higher salaries. Further we can also see that there is no direct relationship between salary of employee based on gender, as in cases where male and female employees have same work experience, any one of them could have had higher salary.</p>
