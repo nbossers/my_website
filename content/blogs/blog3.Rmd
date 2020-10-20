@@ -1,0 +1,166 @@
+---
+categories:
+- ""
+- ""
+date: "20/10/2020"
+description: An analysis of IMDB movie ratings
+draft: false
+image: pic08.jpg
+keywords: ""
+slug: blog5
+title: Spielburg vs Burton
+---
+
+```{r, setup, echo=FALSE}
+knitr::opts_chunk$set(
+  message = FALSE, 
+  warning = FALSE, 
+  tidy=FALSE,     # display code as typed
+  size="small")   # slightly smaller font for code
+options(digits = 3)
+
+# default figure size
+knitr::opts_chunk$set(
+  fig.width=6.75, 
+  fig.height=6.75,
+  fig.align = "center")
+```
+
+
+```{r load-libraries, echo=FALSE}
+library(tidyverse)  # Load ggplot2, dplyr, and all the other tidyverse packages
+library(mosaic)
+library(ggthemes)
+library(GGally)
+library(readxl)
+library(here)
+library(skimr)
+library(janitor)
+library(broom)
+library(tidyquant)
+library(infer)
+library(openintro)
+library(tidyquant)
+library(forcats)
+```
+
+
+IMDB ratings: Differences between directors
+
+I would like you to explore whether the mean IMDB rating for Steven Spielberg and Tim Burton are the same or not. I will run a hypothesis test and calculate the confidence intervals for the mean ratings of these two directors. 
+
+
+Null and alternative hypothesis:
+
+H0: The difference in the mean IMDB ratings for Steven Spielberg and Tim Burton is equal to zero
+H1: The difference in the mean IMDB ratings for Steven Spielberg and Tim Burton is not equal to zero
+
+Loading data and examining its structure:
+
+```{r load-movies-data}
+movies <- read_csv(here::here("data", "movies.csv"))
+```
+
+R analysis:
+
+```{r}
+#round values up to 3 decimals
+options(digits=4)
+
+#Cleaning the data and removing the unnecessary columns 
+movies_clean <- movies %>% 
+  filter((director=="Steven Spielberg")|(director=="Tim Burton")) %>% 
+  subset(select=c("director","rating"))
+
+#Calculating variables required for Confidence Intervals
+mean_ratings <- movies_clean %>% 
+  group_by(director) %>% 
+  summarise(mean_ratings=mean(rating),
+            count_director= count(director),
+            stdev_ratings=sd(rating)) 
+
+#Computing standard error and confidence intervals
+ci_director <- mean_ratings %>% 
+  mutate(se_director=stdev_ratings/sqrt(count_director),
+         lower_ci=mean_ratings-1.96*se_director,
+         upper_ci=mean_ratings+1.96*se_director,
+         
+#reorder the directors to appear Spielberg on top in the chart
+         director=fct_reorder(director,desc(stdev_ratings)))
+ci_director
+
+#defining colors for error bars
+ci_colors <- c("#09bec3", "#f7746b")
+  
+#Visualizing the data
+ggplot()+
+  geom_errorbar(ci_director,mapping=aes(x=director, 
+                                        ymin=lower_ci, 
+                                        ymax=upper_ci),
+                                        width=0.05,
+                                        size=2,
+                                        color=ci_colors)+
+  geom_point(ci_director, mapping=aes(x=director,
+                                        y=mean_ratings),
+                                        size=4,
+                                        color=ci_colors)+
+  coord_flip()+
+  geom_rect()+
+  theme_bw()+
+  labs(title = "Do Spielberg and Burton have the same mean IMDB ratings?",
+     subtitle = "95% Confidence intervals overlap",
+     x="",
+     y="Mean IMDB Rating")+
+  geom_rect(aes(NULL,
+              NULL,
+              xmin=0,
+              xmax=2.75),
+          ymin=7.290,
+          ymax=7.298,
+          colour="white",
+          size=0.5,
+          alpha=0.2)
+```
+The difference in mean IMDB rating is 0.64.
+
+Examining the graph, we cannot draw any final conclusion, as the overlap in the confidence intervals is minor - this will require some further investigation.
+
+```{r}
+#Calculating the difference in means
+diff_means <- movies_clean %>% 
+  specify(rating~director) %>% 
+  calculate("diff in means",
+            oder=c("Tim Burton", "Steven Spielberg"))
+
+#Simulating null distribution
+spielberg_burton_null <- movies_clean %>% 
+  specify(rating~director) %>% 
+  hypothesize(null = "independence") %>% 
+  generate(reps = 5000) %>% 
+  calculate("diff in means",
+            oder=c("Tim Burton",
+                   "Steven Spielberg"))
+
+#Visualising the simulated distribution 
+spielberg_burton_null %>% 
+  visualize(obs_stat = diff_means) + 
+  labs(x = "Difference in mean rating\n(Spielberg - Burton)",
+       y = "Count",
+       subtitle = "Red line shows observed difference in mean") +
+  theme_minimal() +
+  theme(panel.grid.minor = element_blank())
+```
+
+The red line is pretty far in the right tail of the distribution and seems atypical. We can calculate the probability of seeing a difference as big as 0.64 by using the get_pvalue function
+
+```{r}
+
+#Calculating the p value
+spielberg_burton_null %>% 
+ get_pvalue(obs_stat = diff_means,
+            direction = "both")
+
+```
+
+The p value of 0.0124 which indicates that there is a probability of 1.24% to observe a difference in means of the ratings as large as 0.64. 
+Therefore, we can conclude that there is a statistically significant difference between the IMDB ratings of the two directors, with higher ratings for Steven Spielberg than Tim Burton. We can now reject the Null hypothesis.

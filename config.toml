@@ -107,7 +107,7 @@ disqusShortname = ""
       title = "Spielberg vs Burton"
       subtitle = "An analysis of IMDB movie ratings"
       image = "pic04.jpg"
-      url = "projects/imdb"
+      url = "blogs/blog3"
       
 
     [[params.tiles.showcase]]
